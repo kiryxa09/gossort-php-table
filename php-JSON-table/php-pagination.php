@@ -9,10 +9,16 @@ ini_set('include_path', '.:' . $ini_path); // Add current directory and php.ini 
 <?php
 $json = file_get_contents('patents-example.json');
 $data = json_decode($json, true);
-$varieties_per_page = 3;
+$varieties_per_page = 2;
 $current_page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $start_from = ($current_page - 1) * $varieties_per_page;
 $end_at = $start_from + $varieties_per_page;
+$total_varieties = 0; // Initialize total number of varieties to 0 (you should replace this with the actual value)
+foreach ($data['Cultures'] as $culture) {
+  foreach ($culture['Varieties'] as $variety) {
+    $total_varieties++; // Increment total number of varieties for each variety found in the data array
+  }
+}
 $current_page_data = array_slice($data, $start_from, $varieties_per_page);
 // Initialize an array to store the cultures and their paginated varieties
 $cultures = [];
@@ -51,7 +57,6 @@ function debug_to_console($data) {
 	<title>Патенты утратившие силу</title>
 </head>
 <body>
-	<?php if ($total_varieties > 0): ?>
 		<h1>Патенты утратившие силу</h1>
 		<?php for ($i = 0; $i < count($current_page_data); $i++): ?>
       <?php debug_to_console($current_page_data["Cultures"][$i]["Name"]) ?>
@@ -61,6 +66,7 @@ function debug_to_console($data) {
           <p><?php echo $variety["Name"]; ?></p> 
         <?php endforeach; ?> 
       </div> 
+    
     <?php endfor; ?> 
     <?php if ($current_page > 1): ?>
 			<a href="?page=<?php echo $current_page - 1; ?>">&laquo; Previous</a> |
