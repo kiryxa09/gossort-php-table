@@ -65,6 +65,725 @@
           "Reason": "Потомучто"
         }
       ]
+    },
+    {
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },{
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },{
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    }, {
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    } ,{
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },{
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },{
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    }, {
+      "id": 1,
+      "Name": "Абрикос",
+      "Varieties": [
+        {
+          "id": 1,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 2,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 3,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "Name": "Айва",
+      "Varieties": [
+        {
+          "id": 4,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Золото Скифов",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 5,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        },
+        {
+          "id": 6,
+          "Code": 0,
+          "Query": 0,
+          "Name": "Айсберг",
+          "Patent": 0,
+          "Closed": "01.01.1970",
+          "Reason": "Потомучто"
+        }
+      ]
     }
   ]
 }
