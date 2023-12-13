@@ -5,9 +5,24 @@ $memory_limit = '1024M';
 // Include updated php.ini file (assuming it's in the same directory as this script)
 ini_set('memory_limit', $memory_limit);
 ?>
+
+<!-- "Varieties": [
+  {
+    "Kind": "tomato",
+    "Code": 0,
+    "Application": 0,
+    "Name": "Айсберг",
+    "Patent": 0,
+    "Closed": "01.01.1970",
+    "Reason": "Потомучто"
+  }
+] to refactor JSON-->
 <?php
 
-$json = file_get_contents('patents-example.json');
+$handle = fopen('patents-example.json', 'r');
+$json = stream_get_contents($handle);
+fclose($handle);
+
 $dataArray = json_decode($json, true);
 
 function debug_to_console($data) {
