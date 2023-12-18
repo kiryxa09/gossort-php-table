@@ -22,7 +22,7 @@ function debug_to_console($data)
   echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
 }
 
-$varietiesPerPage = 4;
+$varietiesPerPage = 25;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $startIndex = ($page - 1) * $varietiesPerPage;
 $endIndex = $startIndex + $varietiesPerPage - 1;
@@ -80,7 +80,8 @@ if (isset($_GET['variety'])) {
   <!-- <link rel="stylesheet" media="screen" href="style.php"> -->
   <style type="text/css">
     .table {
-      width: 100%;
+      margin: auto;
+      width: 80%;
       border-collapse: collapse;
     }
 
@@ -121,6 +122,25 @@ if (isset($_GET['variety'])) {
       display: flex;
       align-items: center;
       justify-content: center;
+      margin: 0;
+    }
+
+    .form__datalist{
+      max-height: 30vh;
+    }
+
+    .form__label {
+      min-width: 200px;
+      text-align: right;
+    }
+
+    .form__input {
+      margin: 15px;
+      font: 15px/24px 'Muli', sans-serif; 
+      color: #333; 
+      width: 250px; 
+      box-sizing: border-box; 
+      letter-spacing: 1px;
     }
 
     .form__button {
@@ -180,6 +200,11 @@ if (isset($_GET['variety'])) {
       display: none;
     }
 
+    .header {
+      text-align: center;
+      margin: 20px;
+    }
+
     @media (max-width: 768px) {
       .table__header {
         margin: 10px;
@@ -210,10 +235,13 @@ if (isset($_GET['variety'])) {
 </head>
 
 <body>
+  <header>
+    <h1 class="header">Патенты утратившие силу</h1>
+  </header>
   <form method="GET" action="" class="form">
-    <label class="form__label" for="kind">Filter by kind:</label>
-    <input class="form__textarea" id="kindInput" name="kind" placeholder="Сбросить фильтр" list="kindOptions">
-    <datalist id="kindOptions">
+    <label class="form__label" for="kindInput">Filter by Kind:</label>
+    <input class="form__input" id="kindInput" name="kind" placeholder="Сбросить фильтр" list="kindOptions">
+    <datalist class="form__datalist" id="kindOptions">
       <?php
       $selectOptions = [];
       foreach ($dataArray['Varieties'] as $variety) {
@@ -230,9 +258,9 @@ if (isset($_GET['variety'])) {
   </form>
 
   <form method="GET" action="" class="form">
-    <label class="form__label" for="variety">Filter by Variety:</label>
-    <input class="form__textarea" id="varietyInput" name="variety" placeholder="Сбросить фильтр" list="varietyOptions">
-    <datalist id="varietyOptions">
+    <label class="form__label" for="varietyInput">Filter by Variety:</label>
+    <input class="form__input" id="varietyInput" name="variety" placeholder="Сбросить фильтр" list="varietyOptions">
+    <datalist class="form__datalist" id="varietyOptions">
       <?php
       $selectOptions = [];
       foreach ($dataArray['Varieties'] as $variety) {
@@ -277,13 +305,17 @@ if (isset($_GET['variety'])) {
   echo '</table>';
   if ($varieties === array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage)) {
     echo '<div class="pagination">';
-    for ($i = 1; $i <= $totalPages; $i++) {
-      if ($i == $page) {
-        echo '<a class="pagination__link pagination__link_inactive"' . $i . '">' . $i . '</a> ';
-      } else {
-        echo '<a class="pagination__link" href="?page=' . $i . '">' . $i . '</a> ';
+    for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
+      if ($i > 0) {
+        if ($i == $page) {
+          echo '<a class="pagination__link pagination__link_inactive"' . $i . '">' . $i . '</a> ';
+        } else {
+          echo '<a class="pagination__link" href="?page=' . $i . '">' . $i . '</a> ';
+        }
       }
     }
+    echo ">>>>>  ";
+    echo '<a class="pagination__link" href="?page=' . $totalPages . '">' . $totalPages . '</a> ';
     echo '<br />';
     echo  'Current Page: ' . $page;
     echo '</div>';
