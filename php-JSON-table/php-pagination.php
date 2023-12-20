@@ -1,17 +1,75 @@
 <?php
-// Set memory limit to 1024 MB
-$memory_limit = '1024M';
-
-// Include updated php.ini file (assuming it's in the same directory as this script)
-ini_set('memory_limit', $memory_limit);
-?>
-<?php
-
 $handle = fopen('patents-example.json', 'r');
 $json = stream_get_contents($handle);
 fclose($handle);
-
 $dataArray = json_decode($json, true);
+
+$varietiesPerPage = 25;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$startIndex = ($page - 1) * $varietiesPerPage;
+$endIndex = $startIndex + $varietiesPerPage - 1;
+
+$executed = false;
+$filtered = false;
+
+if (!$executed) {
+  $varieties = $dataArray['Varieties'];
+
+  $varieties = array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage);
+  $totalvarieties = count($dataArray['Varieties']);
+  $totalPages = ceil($totalvarieties / $varietiesPerPage);
+  $executed = true;
+};
+
+$filterKind = isset($_GET['kind']) ? $_GET['kind'] : '';
+
+if (isset($_GET['kind'])) {
+  $varieties = [];
+  $counter = 0;
+  if ($filterKind) {
+    $filterKind = ($filterKind);
+    $filterKind = explode("\n", $filterKind);
+    foreach ($dataArray['Varieties'] as $variety) {
+      $kindName = strtolower($variety['Kind']);
+      if (in_array($kindName, $filterKind)) {
+        $varieties[] = $variety;
+        $counter += 1;
+      }
+    }
+    $varieties = array_slice($varieties, $startIndex, $varietiesPerPage);
+    $totalPages = ceil($counter / $varietiesPerPage);
+  }
+  $filtered = true;
+}
+
+$filterVariety = isset($_GET['variety']) ? $_GET['variety'] : '';
+
+if (isset($_GET['variety'])) {
+  $varieties = [];
+  $counter = 0;
+  if ($filterVariety) {
+    $filterVariety = strtolower($filterVariety);
+    $filterVariety = explode("\n", $filterVariety);
+    foreach ($dataArray['Varieties'] as $variety) {
+      $varietyName = strtolower($variety['Name']);
+      if (in_array(strtolower($varietyName), $filterVariety)) {
+        $varieties[] = $variety;
+        $counter += 1;
+      }
+    }
+    debug_to_console($counter);
+    $varieties = array_slice($varieties, $startIndex, $varietiesPerPage);
+    $totalPages = ceil($counter / $varietiesPerPage);
+  }
+  $filtered = true;
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $varieties = array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage);
+  $totalvarieties = count($dataArray['Varieties']);
+  $totalPages = ceil($totalvarieties / $varietiesPerPage);
+  $filtered = false;
+}
 
 function debug_to_console($data)
 {
@@ -20,56 +78,7 @@ function debug_to_console($data)
     $output = implode(',', $output);
 
   echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-}
-
-$varietiesPerPage = 25;
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
-$startIndex = ($page - 1) * $varietiesPerPage;
-$endIndex = $startIndex + $varietiesPerPage - 1;
-
-$totalvarieties = count($dataArray['Varieties']);
-$totalPages = ceil($totalvarieties / $varietiesPerPage);
-
-$varieties = array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage);
-
-$filterKind = isset($_GET['kind']) ? $_GET['kind'] : '';
-
-if (isset($_GET['kind'])) {
-  $varieties = [];
-  if ($filterKind) {
-    $filterKind = ($filterKind);
-    $filterKind = explode("\n", $filterKind);
-    foreach ($dataArray['Varieties'] as $variety) {
-      $kindName = strtolower($variety['Kind']);
-      if (in_array($kindName, $filterKind)) {
-        $varieties[] = $variety;
-      }
-    }
-  } else {
-    $varieties = array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage);
-  }
-}
-
-
-$filterVariety = isset($_GET['variety']) ? $_GET['variety'] : '';
-
-if (isset($_GET['variety'])) {
-  $varieties = [];
-  if ($filterVariety) {
-    $filterVariety = strtolower($filterVariety);
-    $filterVariety = explode("\n", $filterVariety);
-    foreach ($dataArray['Varieties'] as $variety) {
-      $varietyName = strtolower($variety['Name']);
-      if (in_array(strtolower($varietyName), $filterVariety)) {
-        $varieties[] = $variety;
-      }
-    }
-  } else {
-    $varieties = array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage);
-    debug_to_console("3");
-  }
-}
-
+};
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +86,6 @@ if (isset($_GET['variety'])) {
 
 <head>
   <title>Патенты утратившие силу</title>
-  <!-- <link rel="stylesheet" media="screen" href="style.php"> -->
   <style type="text/css">
     .table {
       margin: auto;
@@ -125,7 +133,7 @@ if (isset($_GET['variety'])) {
       margin: 0;
     }
 
-    .form__datalist{
+    .form__datalist {
       max-height: 30vh;
     }
 
@@ -136,10 +144,10 @@ if (isset($_GET['variety'])) {
 
     .form__input {
       margin: 15px;
-      font: 15px/24px 'Muli', sans-serif; 
-      color: #333; 
-      width: 250px; 
-      box-sizing: border-box; 
+      font: 15px/24px 'Muli', sans-serif;
+      color: #333;
+      width: 250px;
+      box-sizing: border-box;
       letter-spacing: 1px;
     }
 
@@ -219,7 +227,6 @@ if (isset($_GET['variety'])) {
       }
     }
 
-    /* Media query for screens smaller than 480px */
     @media (max-width: 480px) {
       .table__cell {
         margin: 5px;
@@ -240,7 +247,7 @@ if (isset($_GET['variety'])) {
   </header>
   <form method="GET" action="" class="form">
     <label class="form__label" for="kindInput">Filter by Kind:</label>
-    <input class="form__input" id="kindInput" name="kind" placeholder="Сбросить фильтр" list="kindOptions">
+    <input class="form__input" id="kindInput" name="kind" placeholder="Сбросить фильтр" list="kindOptions" value="<?php echo is_array($filterKind) ? implode("\n", $filterKind) : $filterKind; ?>">
     <datalist class="form__datalist" id="kindOptions">
       <?php
       $selectOptions = [];
@@ -259,7 +266,7 @@ if (isset($_GET['variety'])) {
 
   <form method="GET" action="" class="form">
     <label class="form__label" for="varietyInput">Filter by Variety:</label>
-    <input class="form__input" id="varietyInput" name="variety" placeholder="Сбросить фильтр" list="varietyOptions">
+    <input class="form__input" id="varietyInput" name="variety" placeholder="Сбросить фильтр" list="varietyOptions" value="<?php echo is_array($filterVariety) ? implode("\n", $filterVariety) : $filterVariety; ?>">
     <datalist class="form__datalist" id="varietyOptions">
       <?php
       $selectOptions = [];
@@ -273,11 +280,15 @@ if (isset($_GET['variety'])) {
       ?>
     </datalist>
     </input>
-    <button class="form__button" type="submit">Применить</button>
+    <button class="form__button form__button__refresh" type="submit">Применить</button>
+  </form>
+
+  <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <button class="form__button" type="submit">В начало</button>
   </form>
 
   <?php
-  if ($varieties !== array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage)) {
+  if ($filtered) {
     echo '<h2 class="gossort__subheader">Отфильтрованный список</h2>';
     echo '<br />';
   }
@@ -303,23 +314,50 @@ if (isset($_GET['variety'])) {
     echo '</tr>';
   }
   echo '</table>';
-  if ($varieties === array_slice($dataArray['Varieties'], $startIndex, $varietiesPerPage)) {
+  if ($filtered) {
     echo '<div class="pagination">';
     for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
       if ($i > 0) {
         if ($i == $page) {
-          echo '<a class="pagination__link pagination__link_inactive"' . $i . '">' . $i . '</a> ';
+          echo '<a class="pagination__link pagination__link_inactive">' . $i . '</a> ';
+        } else {
+          if ($filterVariety) {
+            $varietyCode = (is_array($filterVariety) ? implode("\n", $filterVariety) : $filterVariety);
+            echo '<a class="pagination__link" href="?page=' . $i . '&variety=' . $varietyCode . '">' . $i . '</a> ';
+          } elseif ($filterKind) {
+            $kindCode = (is_array($filterKind) ? implode("\n", $filterKind) : $filterKind);
+            echo '<a class="pagination__link" href="?page=' . $i . '&kind=' . $kindCode . '">' . $i . '</a> ';
+          }
+          if ($i == $page + 5) {
+            echo "...";
+            if ($filterVariety) {
+              echo '<a class="pagination__link" href="?page=' . $totalPages . '&variety=' . $varietyCode . '">' . $totalPages . '</a> ';
+            } elseif ($filterKind) {
+              echo '<a class="pagination__link" href="?page=' . $totalPages . '&kind=' . $kindCode . '">' . $totalPages . '</a> ';
+            }
+          }
+        }
+      }
+    }
+    echo '</div>';
+  } else {
+    echo '<div class="pagination">';
+    for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
+      if ($i > 0) {
+        if ($i == $page) {
+          echo '<a class="pagination__link pagination__link_inactive">' . $i . '</a> ';
         } else {
           echo '<a class="pagination__link" href="?page=' . $i . '">' . $i . '</a> ';
         }
       }
     }
-    echo ">>>>>  ";
-    echo '<a class="pagination__link" href="?page=' . $totalPages . '">' . $totalPages . '</a> ';
+    echo ">>>>> ";
+    echo '<a class="pagination__link" href="?page=' . $totalPages . '&kind=' . $filterKind . '&variety=' . $filterVariety . '">' . $totalPages . '</a> ';
     echo '<br />';
-    echo  'Current Page: ' . $page;
+    echo 'Current Page: ' . $page;
     echo '</div>';
   }
   ?>
 </body>
+
 </html>
