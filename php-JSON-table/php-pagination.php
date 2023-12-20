@@ -1,5 +1,5 @@
 <?php
-$handle = fopen('patents-example.json', 'r');
+$handle = fopen('Patents.json', 'r');
 $json = stream_get_contents($handle);
 fclose($handle);
 $dataArray = json_decode($json, true);
@@ -21,45 +21,31 @@ if (!$executed) {
   $executed = true;
 };
 
-$filterKind = isset($_GET['kind']) ? $_GET['kind'] : '';
+$filterVariety = '';
+$filterKind = '';
 
-if (isset($_GET['kind'])) {
+$searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
+if ($searchQuery) {
   $varieties = [];
   $counter = 0;
-  if ($filterKind) {
-    $filterKind = ($filterKind);
-    $filterKind = explode("\n", $filterKind);
-    foreach ($dataArray['Varieties'] as $variety) {
-      $kindName = strtolower($variety['Kind']);
-      if (in_array($kindName, $filterKind)) {
-        $varieties[] = $variety;
-        $counter += 1;
+  $searchQuery = strtolower($searchQuery);
+  foreach ($dataArray['Varieties'] as $variety) {
+    $kindName = strtolower($variety['Kind']);
+    $varietyName = strtolower($variety['Name']);
+    if (strpos($kindName, $searchQuery) !== false || strpos($varietyName, $searchQuery) !== false) {
+      $varieties[] = $variety;
+      $counter++;
+
+      if (strpos($varietyName, $searchQuery) !== false) {
+        $filterVariety = $varietyName;
+      }
+      if (strpos($kindName, $searchQuery) !== false) {
+        $filterKind = $kindName;
       }
     }
-    $varieties = array_slice($varieties, $startIndex, $varietiesPerPage);
-    $totalPages = ceil($counter / $varietiesPerPage);
   }
-  $filtered = true;
-}
-
-$filterVariety = isset($_GET['variety']) ? $_GET['variety'] : '';
-
-if (isset($_GET['variety'])) {
-  $varieties = [];
-  $counter = 0;
-  if ($filterVariety) {
-    $filterVariety = strtolower($filterVariety);
-    $filterVariety = explode("\n", $filterVariety);
-    foreach ($dataArray['Varieties'] as $variety) {
-      $varietyName = strtolower($variety['Name']);
-      if (in_array(strtolower($varietyName), $filterVariety)) {
-        $varieties[] = $variety;
-        $counter += 1;
-      }
-    }
-    $varieties = array_slice($varieties, $startIndex, $varietiesPerPage);
-    $totalPages = ceil($counter / $varietiesPerPage);
-  }
+  $varieties = array_slice($varieties, $startIndex, $varietiesPerPage);
+  $totalPages = ceil($counter / $varietiesPerPage);
   $filtered = true;
 }
 
@@ -245,9 +231,9 @@ function debug_to_console($data)
     <h1 class="header">Патенты утратившие силу</h1>
   </header>
   <form method="GET" action="" class="form">
-    <label class="form__label" for="kindInput">Filter by Kind:</label>
-    <input class="form__input" id="kindInput" name="kind" placeholder="Сбросить фильтр" list="kindOptions" value="<?php echo is_array($filterKind) ? implode("\n", $filterKind) : $filterKind; ?>">
-    <datalist class="form__datalist" id="kindOptions">
+    <label class="form__label" for="searchInput">Поиск по виду, роду или сорту:</label>
+    <input class="form__input" id="searchInput" name="search" placeholder="Введите запрос" list="searchOptions" value="<?php echo is_array($searchQuery) ? implode("\n", $searchQuery) : $searchQuery; ?>">
+    <datalist class="form__datalist" id="searchOptions">
       <?php
       $selectOptions = [];
       foreach ($dataArray['Varieties'] as $variety) {
@@ -257,18 +243,6 @@ function debug_to_console($data)
           echo "<option value=\"$kindName\">$kindName</option>";
         }
       }
-      ?>
-    </datalist>
-    </input>
-    <button class="form__button" type="submit">Применить</button>
-  </form>
-
-  <form method="GET" action="" class="form">
-    <label class="form__label" for="varietyInput">Filter by Variety:</label>
-    <input class="form__input" id="varietyInput" name="variety" placeholder="Сбросить фильтр" list="varietyOptions" value="<?php echo is_array($filterVariety) ? implode("\n", $filterVariety) : $filterVariety; ?>">
-    <datalist class="form__datalist" id="varietyOptions">
-      <?php
-      $selectOptions = [];
       foreach ($dataArray['Varieties'] as $variety) {
         $varietyName = $variety['Name'];
         if (!in_array($varietyName, $selectOptions)) {
@@ -278,12 +252,11 @@ function debug_to_console($data)
       }
       ?>
     </datalist>
-    </input>
-    <button class="form__button form__button__refresh" type="submit">Применить</button>
+    <button class="form__button" type="submit">Поиск</button>
   </form>
 
   <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <button class="form__button" type="submit">В начало</button>
+    <button class="form__button" type="submit">К списку</button>
   </form>
 
   <?php
@@ -322,10 +295,10 @@ function debug_to_console($data)
 
         if ($filterVariety) {
           $varietyCode = (is_array($filterVariety) ? implode(",", $filterVariety) : $filterVariety);
-          $queryParam = '&variety=' . $varietyCode;
+          $queryParam = '&search=' . $varietyCode;
         } elseif ($filterKind) {
           $kindCode = (is_array($filterKind) ? implode(",", $filterKind) : $filterKind);
-          $queryParam = '&kind=' . $kindCode;
+          $queryParam = '&search=' . $kindCode;
         }
 
         echo '<a class="pagination__link' . ($isActivePage ? ' pagination__link_inactive' : '') . '" href="?page=' . $i . $queryParam . '">' . $i . '</a> ';
@@ -348,7 +321,7 @@ function debug_to_console($data)
         }
       }
     }
-    echo ">>>>> ";
+    echo "... ";
     echo '<a class="pagination__link" href="?page=' . $totalPages . '&kind=' . $filterKind . '&variety=' . $filterVariety . '">' . $totalPages . '</a> ';
     echo '<br />';
     echo 'Current Page: ' . $page;
