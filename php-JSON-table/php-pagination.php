@@ -57,7 +57,6 @@ if (isset($_GET['variety'])) {
         $counter += 1;
       }
     }
-    debug_to_console($counter);
     $varieties = array_slice($varieties, $startIndex, $varietiesPerPage);
     $totalPages = ceil($counter / $varietiesPerPage);
   }
@@ -318,24 +317,22 @@ function debug_to_console($data)
     echo '<div class="pagination">';
     for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
       if ($i > 0) {
-        if ($i == $page) {
-          echo '<a class="pagination__link pagination__link_inactive">' . $i . '</a> ';
-        } else {
-          if ($filterVariety) {
-            $varietyCode = (is_array($filterVariety) ? implode("\n", $filterVariety) : $filterVariety);
-            echo '<a class="pagination__link" href="?page=' . $i . '&variety=' . $varietyCode . '">' . $i . '</a> ';
-          } elseif ($filterKind) {
-            $kindCode = (is_array($filterKind) ? implode("\n", $filterKind) : $filterKind);
-            echo '<a class="pagination__link" href="?page=' . $i . '&kind=' . $kindCode . '">' . $i . '</a> ';
-          }
-          if ($i == $page + 5) {
-            echo "...";
-            if ($filterVariety) {
-              echo '<a class="pagination__link" href="?page=' . $totalPages . '&variety=' . $varietyCode . '">' . $totalPages . '</a> ';
-            } elseif ($filterKind) {
-              echo '<a class="pagination__link" href="?page=' . $totalPages . '&kind=' . $kindCode . '">' . $totalPages . '</a> ';
-            }
-          }
+        $isActivePage = ($i == $page);
+        $queryParam = '';
+
+        if ($filterVariety) {
+          $varietyCode = (is_array($filterVariety) ? implode(",", $filterVariety) : $filterVariety);
+          $queryParam = '&variety=' . $varietyCode;
+        } elseif ($filterKind) {
+          $kindCode = (is_array($filterKind) ? implode(",", $filterKind) : $filterKind);
+          $queryParam = '&kind=' . $kindCode;
+        }
+
+        echo '<a class="pagination__link' . ($isActivePage ? ' pagination__link_inactive' : '') . '" href="?page=' . $i . $queryParam . '">' . $i . '</a> ';
+
+        if ($i == $page + 5) {
+          echo "...";
+          echo '<a class="pagination__link" href="?page=' . $totalPages . $queryParam . '">' . $totalPages . '</a> ';
         }
       }
     }
