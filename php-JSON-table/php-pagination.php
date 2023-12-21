@@ -28,19 +28,19 @@ $searchQuery = isset($_GET['search']) ? $_GET['search'] : '';
 if ($searchQuery) {
   $varieties = [];
   $counter = 0;
-  $searchQuery = strtolower($searchQuery);
+  $loweredQuery = strtolower($searchQuery); //mb_strtolower in server
   foreach ($dataArray['Varieties'] as $variety) {
-    $kindName = strtolower($variety['Kind']);
-    $varietyName = strtolower($variety['Name']);
-    if (strpos($kindName, $searchQuery) !== false || strpos($varietyName, $searchQuery) !== false) {
+    $kindName = strtolower($variety['Kind']); //mb_strtolower in server
+    $varietyName = strtolower($variety['Name']); //mb_strtolower in server
+    if (strpos($kindName, $loweredQuery) !== false || strpos($varietyName, $loweredQuery) !== false) {
       $varieties[] = $variety;
       $counter++;
 
-      if (strpos($varietyName, $searchQuery) !== false) {
-        $filterVariety = $varietyName;
+      if (strpos($varietyName, $loweredQuery) !== false) {
+        $filterVariety = $searchQuery;
       }
-      if (strpos($kindName, $searchQuery) !== false) {
-        $filterKind = $kindName;
+      if (strpos($kindName, $loweredQuery) !== false) {
+        $filterKind = $searchQuery;
       }
     }
   }
@@ -72,71 +72,91 @@ function debug_to_console($data)
 <head>
   <title>Патенты утратившие силу</title>
   <style type="text/css">
-    .table {
+    /* style-kit in server => style only for local dev*/
+    .patents__table {
       margin: auto;
       width: 80%;
       border-collapse: collapse;
     }
 
-    .table__row:nth-child(even) {
+    .patents__table__row:nth-child(even) {
       background-color: #f2f2f2;
     }
 
-    .table__header {
+    .patents__table__header {
       font-weight: bold;
       padding: 8px;
       text-align: left;
     }
 
-    .table__cell {
+    .patents__table__cell {
       padding: 8px;
       margin: 20px;
     }
 
-    .pagination {
+    .patents__pagination {
       margin-top: 16px;
     }
 
-    .pagination__link {
+    .patents__pagination__link {
       margin-right: 8px;
       text-decoration: none;
       color: blue;
     }
 
-    .pagination__link_inactive {
+    .patents__pagination__link_inactive {
       color: green;
     }
 
-    .pagination__link:hover {
+    .patents__pagination__link:hover {
       text-decoration: underline;
     }
 
-    .form {
+    .patents__forms {
+      display: flex;
+      justify-content: center;
+    }
+
+    .patents__form {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 5px;
+      height: 50px;
+      margin: 15px 0;
       display: flex;
       align-items: center;
+      justify-content: space-between;
+    }
+
+    .patents__form__refresh {
+      border: none;
       justify-content: center;
-      margin: 0;
     }
 
-    .form__datalist {
-      max-height: 30vh;
+    .patents__form__input {
+      border: none;
+      outline: none;
+      padding: 10px;
+      border-radius: 0;
+      height: 45px;
+      margin: 0 0 0 10px;
+      padding: 0;
+      width: 100%;
+      font-family: Inter;
     }
 
-    .form__label {
-      min-width: 200px;
-      text-align: right;
+    .patents__form__label {
+      width: max-content;
+      white-space: nowrap;
+      font-size: 12px;
     }
 
-    .form__input {
-      margin: 15px;
-      font: 15px/24px 'Muli', sans-serif;
-      color: #333;
-      width: 250px;
-      box-sizing: border-box;
-      letter-spacing: 1px;
+    .patents__filtered-text {
+      color: #4B75B4;
+      padding: 10px 0;
     }
 
-    .form__button {
+    .patents__form__button {
       appearance: none;
       background-color: #FAFBFC;
       border: 1px solid rgba(27, 31, 35, 0.15);
@@ -162,62 +182,75 @@ function debug_to_console($data)
       word-wrap: break-word;
     }
 
-    .form__button:hover {
+    .patents__form__button:hover {
       background-color: #F3F4F6;
       text-decoration: none;
       transition-duration: 0.1s;
     }
 
-    .form__button:disabled {
+    .patents__form__button:disabled {
       background-color: #FAFBFC;
       border-color: rgba(27, 31, 35, 0.15);
       color: #959DA5;
       cursor: default;
     }
 
-    .form__button:active {
+    .patents__form__button:active {
       background-color: #EDEFF2;
       box-shadow: rgba(225, 228, 232, 0.2) 0 1px 0 inset;
       transition: none 0s;
     }
 
-    .form__button:focus {
+    .patents__form__button:focus {
       outline: 1px transparent;
     }
 
-    .form__button:before {
+    .patents__form__button:before {
       display: none;
     }
 
-    .form__button:-webkit-details-marker {
+    .patents__form__button:-webkit-details-marker {
       display: none;
     }
 
-    .header {
+    .patents__form__button-refresh {
+      align-self: center;
+      height: 50px;
+    }
+
+    .patents__header {
       text-align: center;
       margin: 20px;
     }
 
     @media (max-width: 768px) {
-      .table__header {
+      .patents__table__header {
         margin: 10px;
         font-size: 10px;
         padding: 2px;
       }
 
-      .table__cell {
+      .patents__table__cell {
         margin: 10px;
         font-size: 10px;
         padding: 2px;
       }
+
+      .patents__form__label {
+        display: none;
+      }
+
+      .patents__forms {
+        flex-direction: column;
+    }
     }
 
     @media (max-width: 480px) {
-      .table__cell {
+      .patents__table__cell {
         margin: 5px;
       }
 
-      .pagination {
+      .patents__pagination {
         margin-top: 8px;
       }
     }
@@ -227,107 +260,111 @@ function debug_to_console($data)
 </head>
 
 <body>
-  <header>
-    <h1 class="header">Патенты утратившие силу</h1>
-  </header>
-  <form method="GET" action="" class="form">
-    <label class="form__label" for="searchInput">Поиск по виду, роду или сорту:</label>
-    <input class="form__input" id="searchInput" name="search" placeholder="Введите запрос" list="searchOptions" value="<?php echo is_array($searchQuery) ? implode("\n", $searchQuery) : $searchQuery; ?>">
-    <datalist class="form__datalist" id="searchOptions">
-      <?php
-      $selectOptions = [];
-      foreach ($dataArray['Varieties'] as $variety) {
-        $kindName = $variety['Kind'];
-        if (!in_array($kindName, $selectOptions)) {
-          $selectOptions[] = $kindName;
-          echo "<option value=\"$kindName\">$kindName</option>";
-        }
-      }
-      foreach ($dataArray['Varieties'] as $variety) {
-        $varietyName = $variety['Name'];
-        if (!in_array($varietyName, $selectOptions)) {
-          $selectOptions[] = $varietyName;
-          echo "<option value=\"$varietyName\">$varietyName</option>";
-        }
-      }
-      ?>
-    </datalist>
-    <button class="form__button" type="submit">Поиск</button>
-  </form>
+  <div class="content">
+    <div class="patents__forms">
+      <form method="GET" action="" class="patents__form patents__form__search">
+        <label class="patents__form__label" for="patents__searchInput">Поиск по виду, роду или сорту:</label>
+        <input class="patents__form__input" id="patents__searchInput" name="search" placeholder="Введите запрос" list="patents__searchOptions" value="<?php echo is_array($searchQuery) ? implode("\n", $searchQuery) : $searchQuery; ?>">
+        <datalist class="patents__form__datalist" id="patents__searchOptions">
+          <?php
+          $selectOptions = [];
+          foreach ($dataArray['Varieties'] as $variety) {
+            $kindName = $variety['Kind'];
+            if (!in_array($kindName, $selectOptions)) {
+              $selectOptions[] = $kindName;
+              echo "<option value=\"$kindName\">$kindName</option>";
+            }
+          }
+          foreach ($dataArray['Varieties'] as $variety) {
+            $varietyName = $variety['Name'];
+            if (!in_array($varietyName, $selectOptions)) {
+              $selectOptions[] = $varietyName;
+              echo "<option value=\"$varietyName\">$varietyName</option>";
+            }
+          }
+          ?>
+        </datalist>
+        <button class="patents__form__button" type="submit">&#128270;</button>
+      </form>
 
-  <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <button class="form__button" type="submit">К списку</button>
-  </form>
+      <form class="patents__form patents__form__refresh" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <button class="patents__form__button patents__form__button-refresh" type="submit">К списку &#127968;</button>
+      </form>
 
-  <?php
-  if ($filtered) {
-    echo '<h2 class="gossort__subheader">Отфильтрованный список</h2>';
-    echo '<br />';
-  }
-  echo '<table class="table">';
-  echo '<tr class="table__row">';
-  echo '<th class="table__header">Род и вид</th>';
-  echo '<th class="table__header">Код</th>';
-  echo '<th class="table__header">Заявка</th>';
-  echo '<th class="table__header">Сорт</th>';
-  echo '<th class="table__header">Патент</th>';
-  echo '<th class="table__header">Окончание действия</th>';
-  echo '<th class="table__header">Причина</th>';
-  echo '</tr>';
-  foreach ($varieties as $variety) {
-    echo '<tr class="table__row">';
-    echo '<td class="table__cell">' . $variety['Kind'] . '</td>';
-    echo '<td class="table__cell">' . $variety['Code'] . '</td>';
-    echo '<td class="table__cell">' . $variety['Application'] . '</td>';
-    echo '<td class="table__cell">' . $variety['Name'] . '</td>';
-    echo '<td class="table__cell">' . $variety['Patent'] . '</td>';
-    echo '<td class="table__cell">' . $variety['Closed'] . '</td>';
-    echo '<td class="table__cell">' . $variety['Reason'] . '</td>';
+    </div>
+
+    <?php
+    if ($filtered) {
+      echo '<span class="patents__filtered-text">Отфильтрованный список</span>';
+      echo '<br />';
+    }
+    echo '<table class="patents__table">';
+    echo '<tr class="patents__table__row">';
+    echo '<th class="patents__table__header"><b>Род и вид</b></th>';
+    echo '<th class="patents__table__header"><b>Код</b></th>';
+    echo '<th class="patents__table__header"><b>Заявка</b></th>';
+    echo '<th class="patents__table__header"><b>Сорт</b></th>';
+    echo '<th class="patents__table__header"><b>Патент</b></th>';
+    echo '<th class="patents__table__header"><b>Окончание действия</b></th>';
+    echo '<th class="patents__table__header"><b>Причина</b></th>';
     echo '</tr>';
-  }
-  echo '</table>';
-  if ($filtered) {
-    echo '<div class="pagination">';
-    for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
-      if ($i > 0) {
-        $isActivePage = ($i == $page);
-        $queryParam = '';
+    foreach ($varieties as $variety) {
+      echo '<tr class="patents__table__row">';
+      echo '<td class="patents__table__cell">' . $variety['Kind'] . '</td>';
+      echo '<td class="patents__table__cell">' . $variety['Code'] . '</td>';
+      echo '<td class="patents__table__cell">' . $variety['Application'] . '</td>';
+      echo '<td class="patents__table__cell">' . $variety['Name'] . '</td>';
+      echo '<td class="patents__table__cell">' . $variety['Patent'] . '</td>';
+      echo '<td class="patents__table__cell">' . $variety['Closed'] . '</td>';
+      echo '<td class="patents__table__cell">' . $variety['Reason'] . '</td>';
+      echo '</tr>';
+    }
+    echo '</table>';
+    if ($filtered) {
+      echo '<ul class="pagination patents__pagination">';
+      for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
+        if ($i > 0) {
+          $isActivePage = ($i == $page);
+          $queryParam = '';
 
-        if ($filterVariety) {
-          $varietyCode = (is_array($filterVariety) ? implode(",", $filterVariety) : $filterVariety);
-          $queryParam = '&search=' . $varietyCode;
-        } elseif ($filterKind) {
-          $kindCode = (is_array($filterKind) ? implode(",", $filterKind) : $filterKind);
-          $queryParam = '&search=' . $kindCode;
+          if ($filterVariety) {
+            $varietyCode = (is_array($filterVariety) ? implode(",", $filterVariety) : $filterVariety);
+            $queryParam = '&search=' . $varietyCode;
+          } elseif ($filterKind) {
+            $kindCode = (is_array($filterKind) ? implode(",", $filterKind) : $filterKind);
+            $queryParam = '&search=' . $kindCode;
+          }
+
+          echo ($isActivePage ?
+            '<li><a class="patents__pagination__link pagination__link_inactive">' . $i . '</a></li>'
+            :
+            '<li><a class="patents__pagination__link" href="?page=' . $i . $queryParam . '">' . $i . '</a></li>');
+
+          if ($i == $page + 5 && $i < $totalPages) {
+            echo "...";
+            echo '<li><a class="patents__pagination__link" href="?page=' . $totalPages . $queryParam . '">' . $totalPages . '</a></li>';
+          }
         }
-
-        echo '<a class="pagination__link' . ($isActivePage ? ' pagination__link_inactive' : '') . '" href="?page=' . $i . $queryParam . '">' . $i . '</a> ';
-
-        if ($i == $page + 5) {
+      }
+      echo '</ul>';
+    } else {
+      echo '<ul class="pagination patents__pagination">';
+      for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
+        if ($i > 0) {
+          if ($i == $page) {
+            echo '<li><a class="patents__pagination__link pagination__link_inactive">' . $i . '</a></li>';
+          } else {
+            echo '<li><a class="patents__pagination__link" href="?page=' . $i . '">' . $i . '</a></li>';
+          }
+        }
+        if ($i == $page + 5 && $i < $totalPages) {
           echo "...";
-          echo '<a class="pagination__link" href="?page=' . $totalPages . $queryParam . '">' . $totalPages . '</a> ';
+          echo '<li><a class="patents__pagination__link" href="?page=' . $totalPages . '">' . $totalPages . '</a></li>';
         }
       }
     }
-    echo '</div>';
-  } else {
-    echo '<div class="pagination">';
-    for ($i = $page - 5; $i <= $page + 5 && $i <= $totalPages; $i++) {
-      if ($i > 0) {
-        if ($i == $page) {
-          echo '<a class="pagination__link pagination__link_inactive">' . $i . '</a> ';
-        } else {
-          echo '<a class="pagination__link" href="?page=' . $i . '">' . $i . '</a> ';
-        }
-      }
-    }
-    echo "... ";
-    echo '<a class="pagination__link" href="?page=' . $totalPages . '&kind=' . $filterKind . '&variety=' . $filterVariety . '">' . $totalPages . '</a> ';
-    echo '<br />';
-    echo 'Current Page: ' . $page;
-    echo '</div>';
-  }
-  ?>
+    ?>
+  </div>
 </body>
 
 </html>
