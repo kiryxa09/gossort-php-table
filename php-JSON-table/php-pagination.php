@@ -242,7 +242,7 @@ function debug_to_console($data)
 
       .patents__forms {
         flex-direction: column;
-    }
+      }
     }
 
     @media (max-width: 480px) {
